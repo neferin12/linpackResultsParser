@@ -9,13 +9,15 @@ try {
         term('Choose a file: ');
         const input = await term.fileInput();
         term.green("\nParsing '%s'\n", input);
+
+        const x = await term.singleColumnMenu(['N', 'NB', 'P', 'Q', 'Time']).promise
         fs.readFile(input, "utf8", function (err, data) {
             const regex = /(?<=T\/V\s+N\s+NB\s+P\s+Q\s+Time\s+Gflops\n-+\n).+/g
             let reses = [...data.matchAll(regex)].map(item => {
                 const data = item[0].match(/(?<=\S+\s+)\S+/g)
-                const ret = {N: 0, GFlops: 0};
-                ret.N = Number.parseFloat(data[0]);
-                ret.GFlops = Number.parseFloat(data[5]);
+                const ret = {};
+                ret[x.selectedText] = Number.parseFloat(data[x.selectedIndex]);
+                ret['GFlops'] = Number.parseFloat(data[5]);
                 return ret;
             });
 
