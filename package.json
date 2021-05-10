@@ -1,0 +1,18 @@
+{
+  "name": "linpackparser",
+  "version": "1.0.0",
+  "description": "Ein Parser fuer die Linpack Results",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "linpack"
+  ],
+  "author": "Julian Pollinger",
+  "license": "MIT",
+  "dependencies": {
+    "objects-to-csv": "^1.3.6",
+    "terminal-kit": "^2.1.2"
+  }
+}
