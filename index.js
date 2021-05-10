@@ -20,8 +20,7 @@ try {
             });
 
             const csv = new ObjectsToCsv(reses)
-            csv.toDisk('./results.csv');
-            process.exit(0);
+            csv.toDisk('./results.csv').finally(() => process.exit(0));
         });
     })();
 } catch (e){
