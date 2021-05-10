@@ -1,3 +1,5 @@
+#! /usr/bin/env node
+
 const fs = require('fs');
 const term = require('terminal-kit').terminal;
 const ObjectsToCsv = require('objects-to-csv');
