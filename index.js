@@ -4,6 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const term = require('terminal-kit').terminal;
 const ObjectsToCsv = require('objects-to-csv');
+const version = require('./package.json').version;
 
 try {
     (async () => {
@@ -14,7 +15,7 @@ try {
             args.push(await term.fileInput())
         }
         if (args[0] === '-v') {
-            console.log(JSON.parse(fs.readFileSync('package.json', 'utf8')).version)
+            console.log(version)
             process.exit(0);
         }
 
