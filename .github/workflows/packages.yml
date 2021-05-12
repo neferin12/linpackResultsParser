@@ -25,7 +25,7 @@ jobs:
     - uses: actions/setup-node@v1
       with:
         registry-url: https://npm.pkg.github.com/
-        scope: '@educorvi'
+        scope: '@neferin12'
     - run: npm ci
     - run: echo registry=https://npm.pkg.github.com/neferin12 >> .npmrc
     - run: npm publish
