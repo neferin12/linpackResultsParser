@@ -33,7 +33,7 @@ try {
                 return ret;
             });
 
-            const resultFile = `./${path.basename(input)}.csv`
+            const resultFile = `./${path.basename(input)}_${x.selectedText}.csv`
 
             const csv = new ObjectsToCsv(reses);
             await csv.toDisk(resultFile, {});

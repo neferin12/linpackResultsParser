@@ -8,7 +8,8 @@
     "build:linux": "nexe index.js -t linux-x64-14.15.3 --output build/linux/linpackParser_linux",
     "build:windows": "nexe index.js -t win64-x64-14.15.3 --output build/windows/linpackParser_win.exe",
     "build:mac": "nexe index.js -t macos-14.15.3 --output build/macos/linpackParser_mac",
-    "semantic-release": "semantic-release"
+    "semantic-release": "semantic-release",
+    "clean": "rm -f *.csv"
   },
   "bin": {
     "linpack-parser": "./index.js"
