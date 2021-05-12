@@ -15,8 +15,6 @@ jobs:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
       - run: npm ci
-      - run: npm run build
-      - run: npm run test
         
   publish-gpr:
     needs: build
