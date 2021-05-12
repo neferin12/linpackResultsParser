@@ -3,7 +3,7 @@
 ```bash
 npm install -g linpackparser
 ```
-
+Unter Releases sind auch kompilierte Binaries (nur für Linux getestet) zu finden, die Installation mit npm wird aber empfohlen. 
 ## Ausführen:
 ```bash
 linpack-parser
