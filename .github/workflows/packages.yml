@@ -8,31 +8,8 @@ on:
   workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
-      - name: Insert repository owner as scope into package name
-        run: |
-          node <<EOF
-          const fs = require('fs').promises;
-          fs.readFile('package.json', 'utf8').then((data) => JSON.parse(data)).then((json) => {
-            json.name = '@$(echo "$GITHUB_REPOSITORY" | sed 's/\/.\+//')/' + json.name;
-            console.info('Package name changed to %s', json.name);
-            return fs.writeFile('package.json', JSON.stringify(json), 'utf8');
-          }).catch(error => {
-            console.error(error);
-            process.exit(1);
-          });
-          EOF
-      - name: verify
-        run: cat package.json
-      - run: npm ci
-        
+jobs:   
   publish-gpr:
-    needs: build
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
@@ -42,6 +19,19 @@ jobs:
         scope: '@neferin12'
     - run: npm ci
     - run: echo registry=https://npm.pkg.github.com/neferin12 >> .npmrc
+    - name: Insert repository owner as scope into package name
+      run: |
+        node <<EOF
+        const fs = require('fs').promises;
+        fs.readFile('package.json', 'utf8').then((data) => JSON.parse(data)).then((json) => {
+          json.name = '@$(echo "$GITHUB_REPOSITORY" | sed 's/\/.\+//')/' + json.name;
+          console.info('Package name changed to %s', json.name);
+          return fs.writeFile('package.json', JSON.stringify(json), 'utf8');
+        }).catch(error => {
+          console.error(error);
+          process.exit(1);
+        });
+        EOF
     - run: npm publish
       env:
         NODE_AUTH_TOKEN: ${{secrets.PUBLISH_GITHUB_PACKAGE_TOKEN}}
