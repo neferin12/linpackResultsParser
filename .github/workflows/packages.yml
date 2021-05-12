@@ -27,6 +27,8 @@ jobs:
             process.exit(1);
           });
           EOF
+      - name: verify
+        run: cat package.json
       - run: npm ci
         
   publish-gpr:
