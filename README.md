@@ -1,11 +1,25 @@
 # Linpack Parser
-Installation:
+## Installation:
 ```bash
 npm install -g linpackparser
 ```
 
-Ausführen:
+## Ausführen:
 ```bash
 linpack-parser
 ```
-Nach der Ausührung des Befehls kann man eine Datei auswählen und welcher Wert in die erste Spalte soll, die zweite zeigt stets die GFlops. Anschließend erzeugt der parser eine Datei 'results.csv' in der die Daten tabellarisch aufgelistet sind.
+Alternativ kann auch bereits in der Kommandozeile eine oder mehrere Dateien angegeben werdem:
+```bash
+linpack-parser /home/julian/logfile.o12345 /home/julian/logfile23.o12369
+```
+Nach der Ausührung des Befehls kann man eine Datei auswählen und welcher Wert in die erste Spalte soll, die zweite zeigt stets die GFlops. Anschließend erzeugt der parser eine csv Datei, in der die Daten tabellarisch aufgelistet sind.
+
+## Update
+### Version prüfen:
+```bash
+linpack-parser -v
+```
+### Updaten
+```bash
+npm update -g linpackparser
+```

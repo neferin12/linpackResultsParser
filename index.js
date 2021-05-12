@@ -13,6 +13,10 @@ try {
             term('Choose a file: ');
             args.push(await term.fileInput())
         }
+        if (args[0] === '-v') {
+            console.log(JSON.parse(fs.readFileSync('package.json', 'utf8')).version)
+            process.exit(0);
+        }
 
         for (const input of args) {
             if (!fs.existsSync(input)) {
@@ -22,9 +26,9 @@ try {
 
             await term.green("\nParsing '%s'\n", input);
 
-            const x = await term.singleColumnMenu(['N', 'NB', 'P', 'Q', 'Time']).promise
+            const x = await term.singleColumnMenu(['N', 'NB', 'P', 'Q', 'Time']).promise;
             const data = fs.readFileSync(input, {encoding: "utf8"});
-            const regex = /(?<=T\/V\s+N\s+NB\s+P\s+Q\s+Time\s+Gflops\n-+\n).+/g
+            const regex = /(?<=T\/V\s+N\s+NB\s+P\s+Q\s+Time\s+Gflops\n-+\n).+/g;
             let reses = [...data.matchAll(regex)].map(item => {
                 const data = item[0].match(/(?<=\S+\s+)\S+/g)
                 const ret = {};
@@ -33,7 +37,7 @@ try {
                 return ret;
             });
 
-            const resultFile = `./${path.basename(input)}_${x.selectedText}.csv`
+            const resultFile = `./${path.basename(input)}_${x.selectedText}.csv`;
 
             const csv = new ObjectsToCsv(reses);
             await csv.toDisk(resultFile, {});
