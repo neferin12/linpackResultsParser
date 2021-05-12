@@ -1,6 +1,6 @@
 {
   "name": "linpackparser",
-  "version": "0.0.0-development",
+  "version": "1.1.0",
   "description": "Ein Parser fuer die Linpack Results",
   "main": "index.js",
   "scripts": {
