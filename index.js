@@ -39,19 +39,32 @@ async function parseHPCG(pat) {
         }
     }
 
+    let errors = [];
+
     for (const file of wantedFiles) {
-        const data = {};
-        data.f = getValueForFor('%f', pat, file);
-        data.n = getValueForFor('%n', pat, file);
+        try {
+            term.grey('Parsing file '+file+"\n");
+            const data = {};
+            data.f = getValueForFor('%f', pat, file);
+            data.n = getValueForFor('%n', pat, file);
 
-        const fileData = fs.readFileSync(file, {encoding: "utf8"});
-        const dataRegex = /(?<=Power \[W\] STAT\s+\|\s+)\S+/g
-        const w = Number.parseFloat(fileData.match(dataRegex)[0])
-        const gflops = Number.parseFloat(fileData.match(/(?<=HPCG result is VALID with a GFLOP\/s rating of )\S+/g)[0]);
+            const fileData = fs.readFileSync(file, {encoding: "utf8"});
+            const dataRegex = /(?<=Power \[W\] STAT\s+\|\s+)\S+/g
+            const w = Number.parseFloat(fileData.match(dataRegex)[0])
+            const gflops = Number.parseFloat(fileData.match(/(?<=HPCG result is VALID with a GFLOP\/s rating of )\S+/g)[0]);
 
-        data.gpw = Math.round(gflops*10000 / w)/10000;
+            data.gpw = Math.round(gflops*10000 / w)/10000;
 
-        results.push(data);
+            results.push(data);
+        }catch (e) {
+            term.red('Error parsing file ' + file + ': ' + e.message + '\n');
+            errors.push('Error parsing file ' + file + ': ' + e.message + '\n');
+        }
+    }
+
+    term.red('\nThere were ' + errors.length + ' errors:\n');
+    for (const error of errors) {
+        term.red(error+'\n');
     }
 
     const csv = new ObjectsToCsv(results);
@@ -78,6 +91,7 @@ try {
         }
         if (args[0] === '-v') {
             console.log(version);
+            process.exit(0);
         }
         if (args[0] === '--hpcg') {
             const reg = args[1];
@@ -86,7 +100,7 @@ try {
                 process.exit(1);
             }
             await parseHPCG(reg);
-            term.green('Results saved to result.csv\n')
+            term.green('Results saved to result.csv\n');
             process.exit(0);
         }
 
