@@ -30,7 +30,7 @@ function getValueForFor(s, pat, file) {
  */
 async function parseHPCG(pat) {
     pat = pat.replace('.', '\\.').replace('*', '.+');
-    const results = [];
+    let results = [];
     const wantedFiles = [];
     const reg = new RegExp(pat.replace(/(%n|%f)/g, '.+'))
     for (const file of fs.readdirSync('.')) {
@@ -66,6 +66,8 @@ async function parseHPCG(pat) {
     for (const error of errors) {
         term.red(error+'\n');
     }
+
+    results.sort(((a, b) => (a.n - b.n) || (a.f - b.f)));
 
     const csv = new ObjectsToCsv(results);
     await csv.toDisk('results.csv', {});
