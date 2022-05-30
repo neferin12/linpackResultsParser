@@ -6,6 +6,10 @@ const term = require('terminal-kit').terminal;
 const ObjectsToCsv = require('objects-to-csv');
 const version = require('./package.json').version;
 
+process.on('SIGINT', function() {
+    process.exit(-1);
+});
+
 /**
  *
  * @param s the value to search for
